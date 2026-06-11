@@ -1,14 +1,13 @@
 //
-//  OnboardNameView.swift
+//  OnboardAgeView.swift
 //  reisi
 //
-//  Created by Shandika David Ardiansyah on 10/06/26.
+//  Created by Shandika David Ardiansyah on 11/06/26.
 //
 
 import SwiftUI
 
-struct OnboardNameView: View {
-
+struct OnboardAgeView: View {
     var viewModel: OnboardingViewModel
     @Binding var currentStep: Int
     @State private var localError: String?
@@ -17,37 +16,37 @@ struct OnboardNameView: View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("What's Your Name?")
+                    Text("How old are you?")
                         .font(.title)
                         .bold()
                         .padding(.bottom, 8)
-                    Text(
-                        "It's nice to meet you. We'll use this to personalize your experience."
-                    )
-                    .font(.callout)
+                    Text(" We use this to personalize your experience. ")
+                        .font(.callout)
                 }
                 .padding(.vertical, 40)
                 Spacer()
             }
-            TextField(
-                "Your Name",
-                text: Binding(
-                    get: { viewModel.name },
-                    set: { viewModel.name = $0 }
-                )
-            )
-            .keyboardType(.default)
-            .font(.title3)
-            .foregroundStyle(Color.primary)
-            .textFieldStyle(.plain)
+
+            Picker(
+                selection: Binding(
+                    get: { viewModel.age },
+                    set: { viewModel.age = $0 }
+                ),
+                label: EmptyView()
+            ) {
+                ForEach(12...100, id: \.self) { age in
+                    Text("\(age)")
+                }
+            }
+            .pickerStyle(.wheel)
 
             if let error = localError {
                 Text(error)
             }
 
             Button("Next") {
-                if viewModel.name.isEmpty {
-                    localError = "Name is required"
+                if viewModel.age == 0 {
+                    localError = "Age is required!"
                 } else {
                     currentStep += 1
                 }
@@ -64,5 +63,5 @@ struct OnboardNameView: View {
 }
 
 #Preview {
-    OnboardNameView(viewModel: OnboardingViewModel(), currentStep: .constant(0))
+    OnboardAgeView(viewModel: OnboardingViewModel(), currentStep: .constant(1))
 }

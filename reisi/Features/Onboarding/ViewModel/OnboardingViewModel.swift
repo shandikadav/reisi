@@ -6,32 +6,34 @@
 //
 
 import Foundation
-
-
+import SwiftData
 
 @Observable
 final class OnboardingViewModel {
-    var viewStep: Int = 0
     var name: String = ""
+    var gender: String = ""
     var weight: Int = 0
+    var age: Int = 0
     var activity: String = ""
+    var selectedAcitivity: Activities = .sedentary
 
-    enum Activity: String, CaseIterable, Identifiable {
+    enum Activities: String, CaseIterable, Identifiable {
         case sedentary = "Sedentary"
         case lightlyActive = "Lightly Active"
         case moderatelyActive = "Moderately Active"
-        case veryActive = "Very Active"
-        case extraActive = "Extra Active"
-        
+        case highlyActive = "Highly Active"
+
         var id: Self { self }
     }
-    
-    
-    func saveData() {
-        let result = OnboardingModel(
+
+    func saveData(context: ModelContext) {
+        let onboardingData = OnboardingModel(
             name: name,
+            gender: gender,
             weight: weight,
+            age: age,
             activity: activity
         )
+        context.insert(onboardingData)
     }
 }

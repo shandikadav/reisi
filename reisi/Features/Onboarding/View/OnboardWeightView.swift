@@ -8,45 +8,50 @@
 import SwiftUI
 
 struct OnboardWeightView: View {
-    
+
     var viewModel: OnboardingViewModel
+    @State private var localError: String?
     @Binding var currentStep: Int
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             HStack {
-                VStack(alignment: .leading){
-                    Text("Hello,")
+                VStack(alignment: .leading) {
+                    Text(" What's your weight?")
                         .font(.title)
                         .bold()
-                        .foregroundStyle(Color.accent)
-                        .padding(.bottom, 4)
-                    Text("Please Input Your Weight")
-                        .font(.title3)
-                        .bold()
-                        .foregroundStyle(Color.accent)
-                        .padding(.bottom, 40)
+                        .padding(.bottom, 8)
+                    Text("We use this to calculate your daily hydration target. ")
+                        .font(.callout)
                 }
+                .padding(.vertical, 40)
                 Spacer()
             }
-            TextField("Your Weight (kg)", value: Binding(
-                get: { viewModel.weight },
-                set: { viewModel.weight = $0 }
-            ), format: .number)
-                .keyboardType(.numberPad)
-                .font(.title3)
-                .foregroundStyle(Color.primary)
-                .textFieldStyle(.plain)
-            
-            
+            TextField(
+                "Your Weight (kg)",
+                value: Binding(
+                    get: { viewModel.weight },
+                    set: { viewModel.weight = $0 }
+                ),
+                format: .number
+            )
+            .keyboardType(.numberPad)
+            .font(.title3)
+            .foregroundStyle(Color.primary)
+            .textFieldStyle(.plain)
+
             Button("Next") {
-                currentStep += 1
+                if viewModel.weight == 0 {
+                    localError = "Please input your weight"
+                } else {
+                    currentStep += 1
+                }
             }
             .controlSize(ControlSize.large)
             .buttonSizing(ButtonSizing.flexible)
             .buttonStyle(.borderedProminent)
             .padding(.top, 60)
-            
+
             Spacer()
         }
         .padding(20)
@@ -54,6 +59,9 @@ struct OnboardWeightView: View {
     }
 }
 
-//#Preview {
-//    OnboardWeightView(On)
-//}
+#Preview {
+    OnboardWeightView(
+        viewModel: OnboardingViewModel(),
+        currentStep: .constant(0)
+    )
+}

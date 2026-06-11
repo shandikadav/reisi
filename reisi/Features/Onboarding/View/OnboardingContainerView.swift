@@ -17,10 +17,12 @@ struct OnboardingContainerView: View {
             TabView(selection: $currentStep) {
                 OnboardNameView(viewModel: viewModel, currentStep: $currentStep)
                     .tag(0)
-                OnboardWeightView(viewModel: viewModel, currentStep: $currentStep)
+                OnboardAgeView(viewModel: viewModel, currentStep: $currentStep)
                     .tag(1)
-                OnboardDailyActivityView(viewModel: viewModel, currentStep: $currentStep)
+                OnboardWeightView(viewModel: viewModel, currentStep: $currentStep)
                     .tag(2)
+                OnboardDailyActivityView(viewModel: viewModel, currentStep: $currentStep)
+                    .tag(3)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .animation(.easeInOut, value: currentStep)
