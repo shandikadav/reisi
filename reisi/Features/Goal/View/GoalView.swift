@@ -15,13 +15,13 @@ struct GoalView: View {
     
     var body: some View {
         VStack {
-            List {
-                ForEach(onboardings) { onboarding in
-                    Text(onboarding.name)
-                    Text(onboarding.activity)
-                    Text("\(onboarding.weight)")
-                    Text("\(onboarding.age)")
+            ForEach(onboardings) { onboarding in
+                HStack {
+                    Text("Hello, \(onboarding.name)")
+                        .font(.title3)
                 }
+                
+                
             }
         }
     }

@@ -15,7 +15,7 @@ struct ContentView: View {
         if onboardings.isEmpty {
             OnboardingContainerView()
         } else {
-            GoalView()
+            Mainview()
         }
     }
 

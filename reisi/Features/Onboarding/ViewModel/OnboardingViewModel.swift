@@ -32,7 +32,7 @@ final class OnboardingViewModel {
             gender: gender,
             weight: weight,
             age: age,
-            activity: activity
+            activity: selectedAcitivity.rawValue
         )
         context.insert(onboardingData)
     }
